@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src -d lib",
-    "prepublish": "yarn build",
+    "prepublishOnly": "yarn build",
     "test": "jest"
   },
   "files": [
