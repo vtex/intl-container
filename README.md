@@ -28,3 +28,9 @@ export default class App extends Component {
   }
 }
 ```
+
+## Props
+
+* **locale:** The locale to be loaded.
+* **loader:** An element to use as loader. (Default: `<div/>`)
+* **children:** Root component that needs to translate strings.
