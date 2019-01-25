@@ -2,6 +2,8 @@ const React = require('react')
 const PropTypes = require('prop-types')
 const { IntlProvider, addLocaleData } = require('react-intl')
 const reduce = require('lodash/reduce')
+const keys = require('lodash/keys')
+const assign = require('lodash/assign')
 const { getISOAlpha3 } = require('./countryISO')
 
 function createIntlContainer(params) {
@@ -102,16 +104,17 @@ function createIntlContainer(params) {
 
     importIntl(baseLocale) {
       if (window && !window.Intl) {
-        return Promise.all([importIntl(), importIntlLocale(baseLocale)]).catch(
-          e => {
-            if (process.env.NODE_ENV === 'development' && verbose) {
-              console.warn(
-                `Error while loading Intl and Intl locale data for ${baseLocale}`,
-                e
-              )
-            }
+        return Promise.all([
+          importIntl(),
+          importIntlLocale(baseLocale),
+        ]).catch(e => {
+          if (process.env.NODE_ENV === 'development' && verbose) {
+            console.warn(
+              `Error while loading Intl and Intl locale data for ${baseLocale}`,
+              e
+            )
           }
-        )
+        })
       }
       return Promise.resolve()
     }
@@ -135,9 +138,17 @@ function createIntlContainer(params) {
       return Promise.all([
         this.importSingleTranslation(baseLocale),
         this.importSingleTranslation(locale),
-      ]).then(([baseTranslation, translation]) =>
-        Object.assign({}, baseTranslation, translation)
-      )
+      ]).then(([baseTranslation, translation]) => {
+        const mergedTranslation = assign({}, baseTranslation, translation)
+        const emptyTranslation = keys(mergedTranslation).length === 0
+
+        if (emptyTranslation && baseLocale !== 'en') {
+          console.warn("Loading fallback locale 'en', and 'en-US'")
+          return this.importTranslation('en', 'en-US')
+        }
+
+        return mergedTranslation
+      })
     }
 
     importSingleTranslation(locale) {
