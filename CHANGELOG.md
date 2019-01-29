@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2019-01-29
+
+### Changed
+
+- Country translation namespace from `countries` to `country` to match Address Form
+
 ## [1.1.0] - 2019-01-25
 
 ### Added

@@ -179,7 +179,7 @@ function createIntlContainer(params) {
       return reduce(
         obj,
         (acc, value, key) => {
-          acc[`countries.${getISOAlpha3(key)}`] = value
+          acc[`country.${getISOAlpha3(key)}`] = value
           return acc
         },
         {}
