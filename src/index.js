@@ -1,6 +1,6 @@
 const React = require('react')
 const PropTypes = require('prop-types')
-const { IntlProvider, addLocaleData } = require('react-intl')
+const { IntlProvider } = require('react-intl')
 const reduce = require('lodash/reduce')
 const keys = require('lodash/keys')
 const assign = require('lodash/assign')
@@ -17,11 +17,6 @@ function createIntlContainer(params) {
       'Please provide a "importIntlLocale" function. Eg: (locale) => import("intl/locale-data/jsonp/" + locale)'
     )
   }
-  if (!params.importReactIntl) {
-    throw new Error(
-      'Please provide a "importReactIntl" function. Eg: (locale) => import("react-intl/locale-data/" + locale)'
-    )
-  }
   if (!params.importCountryCodes) {
     throw new Error(
       'Please provide a "importCountryCodes" function. Eg: (locale) => import("i18n-iso-countries/langs/" + locale ".json")'
@@ -36,7 +31,6 @@ function createIntlContainer(params) {
   const {
     importIntl,
     importIntlLocale,
-    importReactIntl,
     importCountryCodes,
     importTranslation,
   } = params
@@ -117,21 +111,6 @@ function createIntlContainer(params) {
         })
       }
       return Promise.resolve()
-    }
-
-    importReactIntl(baseLocale) {
-      return importReactIntl(baseLocale)
-        .then(localeData => {
-          addLocaleData(localeData)
-        })
-        .catch(e => {
-          if (process.env.NODE_ENV === 'development' && verbose) {
-            console.warn(
-              `Error while loading React Intl locale data for ${baseLocale}`,
-              e
-            )
-          }
-        })
     }
 
     importTranslation(baseLocale, locale) {
