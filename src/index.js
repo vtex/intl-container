@@ -51,7 +51,6 @@ function createIntlContainer(params) {
       this.handleLocaleChange = this.handleLocaleChange.bind(this)
       this.handleNewTranslations = this.handleNewTranslations.bind(this)
       this.importIntl = this.importIntl.bind(this)
-      this.importReactIntl = this.importReactIntl.bind(this)
       this.importTranslation = this.importTranslation.bind(this)
       this.importCountryCodeTranslations = this.importCountryCodeTranslations.bind(
         this
@@ -76,11 +75,10 @@ function createIntlContainer(params) {
 
       Promise.all([
         this.importIntl(baseLocale),
-        this.importReactIntl(baseLocale),
         this.importTranslation(baseLocale, locale),
         this.importCountryCodeTranslations(baseLocale),
       ])
-        .then(([intl, reactIntl, translations, countryCodeTranslations]) => {
+        .then(([intl, translations, countryCodeTranslations]) => {
           if (thisLocale === currentLocale) {
             this.handleNewTranslations(
               locale,
