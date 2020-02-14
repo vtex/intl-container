@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Updated `react-intl` to `3.9.1`
+
+### Removed
+
+- `importReactIntl` function
+
 ## [2.0.0] - 2019-01-29
 
 ### Changed
